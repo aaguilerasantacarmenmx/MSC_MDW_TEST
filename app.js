@@ -719,6 +719,24 @@ app.get("/", auth, (req, res) => {
 		Status: 'OK'
 	})
 }); 
+
+//SERVICIO DESTINADO A PROBAR LA DISPONIBLIDAD DE LA APLICACION
+app.get("/auth", (req, res) => {
+  const token = req.header('x-auth-token');
+  console.log(`12. token: ${token}\n`);
+  if(!token)
+    return res.status(401).json({Auth: 'Sin token, no tienes autorizacion'});
+  try{
+    console.log(`16. process.env.API_KEY: ${process.env.API_KEY}`);
+    const JWT = jwt.sign("", token);
+    const decoded = jwt.verify(JWT, process.env.API_KEY); // Si el API_KEY coincide, devuelve el payload, sino tira un error.
+    console.log(`16. JWT: ${JWT}`);
+    res.status(200).json({JWT: JWT});
+  }
+  catch(e){
+    res.status(400).json({Auth: 'Token invalido'});
+  }
+}); 
   
 //INICIAR SERVIDOR
 app.listen(port, () => {
