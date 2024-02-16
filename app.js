@@ -729,8 +729,8 @@ app.get("/auth", (req, res) => {
   try{
     console.log(`16. process.env.API_KEY: ${process.env.API_KEY}`);
     const JWT = jwt.sign("", token);
-    const decoded = jwt.verify(JWT, process.env.API_KEY); // Si el API_KEY coincide, devuelve el payload, sino tira un error.
     console.log(`16. JWT: ${JWT}`);
+    const decoded = jwt.verify(JWT, process.env.API_KEY); // Si el API_KEY coincide, devuelve el payload, sino tira un error.
     res.status(200).json({JWT: JWT});
   }
   catch(e){
