@@ -14,8 +14,8 @@ let auth = function(req, res, next){
     return res.status(401).json({msg: 'Sin token, no tienes autorizacion'});
   try{
     console.log(`16. process.env.API_KEY: ${process.env.API_KEY}`);
-    const decoded = jwt.verify(token, process.env.API_KEY);
-    console.log(`18. decoded: ${JSON.stringify(decoded)}\n`);
+    const decoded = jwt.verify(token, process.env.API_KEY); // Si el API_KEY coincide, devuelve ell payload, sino tira un error.
+    // console.log(`18. decoded: ${JSON.stringify(decoded)}\n`);
     next();
   }
   catch(e){
@@ -372,7 +372,7 @@ app.post('/searchFile', async (req, res) => {
 });
 
 //SERVICIO DE BUSQUEDA DE ARCHIVOS EN SERVIDOR SFPT
-app.post('/searchFiles', async (req, res) => {
+app.post('/searchFiles', auth, async (req, res) => {
 
   const host = req[`body`][`host`];
   const port = req[`body`][`port`];
@@ -714,7 +714,7 @@ app.post('/deleteFile', async (req, res) => {
 });
 
 //SERVICIO DESTINADO A PROBAR LA DISPONIBLIDAD DE LA APLICACION
-app.get("/", auth, async (req, res) => {
+app.get("/", auth, (req, res) => {
 	res.json({
 		Status: 'OK'
 	})
