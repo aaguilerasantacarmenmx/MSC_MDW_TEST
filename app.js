@@ -13,9 +13,9 @@ let auth = function(req, res, next){
   if(!token)
     return res.status(401).json({msg: 'Sin token, no tienes autorizacion'});
   try{
-    console.log(`16. process.env.API_KEY: ${process.env.API_KEY}\n`);
+    console.log(`16. process.env.API_KEY: ${process.env.API_KEY}`);
     const decoded = jwt.verify(token, process.env.API_KEY);
-    console.log(`18. decoded: ${decoded}\n`);
+    console.log(`18. decoded: ${JSON.stringify(decoded)}\n`);
     next();
   }
   catch(e){
