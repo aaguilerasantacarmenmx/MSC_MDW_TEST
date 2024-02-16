@@ -4,6 +4,24 @@ const bodyParser = require('body-parser');
 const { Client } = require('ssh2');
 const concatStream = require('concat-stream');
 const { error } = require('console');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
+let auth = function(req, res, next){
+  const token = req.header('x-auth-token');
+  console.log(`12. token: ${token}\n`);
+  if(!token)
+    return res.status(401).json({msg: 'Sin token, no tienes autorizacion'});
+  try{
+    console.log(`16. process.env.API_KEY: ${process.env.API_KEY}\n`);
+    const decoded = jwt.verify(token, process.env.API_KEY);
+    console.log(`18. decoded: ${decoded}\n`);
+
+  }
+  catch(e){
+    res.status(400).json({msg: 'Token invalido'});
+  }
+}
 const app = express();
 const port = 3000;
 
@@ -696,7 +714,7 @@ app.post('/deleteFile', async (req, res) => {
 });
 
 //SERVICIO DESTINADO A PROBAR LA DISPONIBLIDAD DE LA APLICACION
-app.get("/", (req, res) => {
+app.get("/", auth, (req, res) => {
 	res.json({
 		Status: 'OK'
 	})
