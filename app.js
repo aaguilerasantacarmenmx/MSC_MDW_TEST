@@ -16,7 +16,7 @@ let auth = function(req, res, next){
     console.log(`16. process.env.API_KEY: ${process.env.API_KEY}\n`);
     const decoded = jwt.verify(token, process.env.API_KEY);
     console.log(`18. decoded: ${decoded}\n`);
-
+    next();
   }
   catch(e){
     res.status(400).json({msg: 'Token invalido'});
@@ -714,7 +714,7 @@ app.post('/deleteFile', async (req, res) => {
 });
 
 //SERVICIO DESTINADO A PROBAR LA DISPONIBLIDAD DE LA APLICACION
-app.get("/", auth, (req, res) => {
+app.get("/", auth, async (req, res) => {
 	res.json({
 		Status: 'OK'
 	})
