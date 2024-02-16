@@ -11,7 +11,7 @@ let auth = function(req, res, next){
   const token = req.header('x-auth-token');
   console.log(`12. token: ${token}\n`);
   if(!token)
-    return res.status(401).json({msg: 'Sin token, no tienes autorizacion'});
+    return res.status(401).json({Auth: 'Sin token, no tienes autorizacion'});
   try{
     console.log(`16. process.env.API_KEY: ${process.env.API_KEY}`);
     const decoded = jwt.verify(token, process.env.API_KEY); // Si el API_KEY coincide, devuelve ell payload, sino tira un error.
@@ -19,7 +19,7 @@ let auth = function(req, res, next){
     next();
   }
   catch(e){
-    res.status(400).json({msg: 'Token invalido'});
+    res.status(400).json({Auth: 'Token invalido'});
   }
 }
 const app = express();
