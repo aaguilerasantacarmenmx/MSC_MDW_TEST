@@ -372,7 +372,7 @@ app.post('/searchFile', async (req, res) => {
 });
 
 //SERVICIO DE BUSQUEDA DE ARCHIVOS EN SERVIDOR SFPT
-app.post('/searchFiles', auth, async (req, res) => {
+app.post('/searchFiles', async (req, res) => {
 
   const host = req[`body`][`host`];
   const port = req[`body`][`port`];
