@@ -181,7 +181,7 @@ app.post('/uploadFile', async (req, res) => {
   }
 
 });
-
+ 
 //SERVICIO DE BUSQUEDA DE ARCHIVOS EN SERVIDOR SFPT
 app.post('/searchFile', async (req, res) => {
 
